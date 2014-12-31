@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<plugin xmlns="http://sdstechnologies.com/jamcast/plugin/manifest/2.0">
+	<providerID>{17EAB891-FAC9-4F51-9AA8-31E085F8DE7B}</providerID>
+	<name>Murfie</name>
+	<description>Murfie is the only streaming music service designed specifically for your CD and vinyl collection.</description>
+	<publisherName>Jamcast, Inc.</publisherName>
+	<publisherUrl>http://getjamcast.com</publisherUrl>
+	<iconResourceName>Jamcast.Plugins.Murfie.murfie-logo.png</iconResourceName>
+	<assemblyFileName>Jamcast.Plugins.Murfie.dll</assemblyFileName>
+	<files>
+		<file>fastjson.dll</file>
+	</files>
+</plugin>

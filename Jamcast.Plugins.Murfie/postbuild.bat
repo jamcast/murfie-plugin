@@ -1,0 +1,1 @@
+copy %0 C:\ProgramData\Jamcast\plugins\Jamcast.Plugins.Murfie\Jamcast.Plugins.Murfie.dll
