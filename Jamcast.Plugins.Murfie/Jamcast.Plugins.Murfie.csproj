@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="API.cs" />
     <Compile Include="Configuration.cs" />
+    <None Include=".gitignore" />
     <None Include="LICENSE" />
     <Compile Include="MurfieTrackHandler.cs" />
     <Compile Include="UI\ObservableObject.cs" />
