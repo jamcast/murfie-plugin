@@ -24,6 +24,7 @@
  * SUCH DAMAGE.
  */
 
+using System;
 namespace Jamcast.Plugins.Murfie.UI.ViewModel
 {
     internal class MasterViewModel : ObservableObject
@@ -32,10 +33,17 @@ namespace Jamcast.Plugins.Murfie.UI.ViewModel
         private LoggedInViewModel _loggedInViewModel;
         private LoggedOutViewModel _loggedOutViewModel;
 
+        public event Action OnNotifyFormIsDirty;
+
         public MasterViewModel()
         {
             _loggedInViewModel = new LoggedInViewModel();
             _loggedInViewModel.LoggedOut += _loggedInViewModel_LoggedOut;
+            _loggedInViewModel.ConfigurationChanged += () =>
+            {
+                if (this.OnNotifyFormIsDirty != null)
+                    this.OnNotifyFormIsDirty();
+            };
 
             _loggedOutViewModel = new LoggedOutViewModel();
             _loggedOutViewModel.LoginSuccess += _loggedOutViewModel_LoginSuccess;

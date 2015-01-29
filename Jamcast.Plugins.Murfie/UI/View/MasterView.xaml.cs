@@ -32,10 +32,20 @@ namespace Jamcast.Plugins.Murfie.UI.View
     public partial class MasterView : ConfigurationPanel
     {
         public MasterView()
-        {
+        {            
             InitializeComponent();
             var model = new MasterViewModel();
+            model.OnNotifyFormIsDirty += () =>
+            {
+                this.SetIsDirty();
+            };
             this.DataContext = model;
+        }
+
+        protected override void OnSave()
+        {
+            base.OnSave();
+            Configuration.Instance.Save();
         }
     }
 }

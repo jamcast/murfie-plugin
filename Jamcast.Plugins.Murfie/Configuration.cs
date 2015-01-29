@@ -37,7 +37,9 @@ namespace Jamcast.Plugins.Murfie
 
         public string Password { get; set; }
 
-        public bool EnableFlac { get; set; }
+        public bool IsLosslessEnabled { get; set; }
+
+        public bool IsLosslessAvailable { get; set; }
 
         private Configuration()
         {
@@ -63,7 +65,6 @@ namespace Jamcast.Plugins.Murfie
             if (_instance == null)
             {
                 _instance = new Configuration();
-                _instance.EnableFlac = true;
                 _instance.Save();
             }
         }

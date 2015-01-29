@@ -35,7 +35,7 @@ namespace Jamcast.Plugins.Murfie.Renderers
         {
             var key = this.ObjectData as API.PersistedTrackKey;
             var track = API.GetTrack(key.DiscID, key.TrackID);
-            return new AudioItem(new MediaServerLocation(typeof(MurfieTrackHandler), new string[] { key.DiscID.ToString(), key.TrackID.ToString() }), Configuration.Instance.EnableFlac ? MediaFormats.FLAC : MediaFormats.MP3)
+            return new AudioItem(new MediaServerLocation(typeof(MurfieTrackHandler), new string[] { key.DiscID.ToString(), key.TrackID.ToString() }), Configuration.Instance.IsLosslessEnabled ? MediaFormats.FLAC : MediaFormats.MP3)
             {
                 Title = track.title ?? "Untitled",
                 AlbumArtist = track.Disc.album.main_artist,

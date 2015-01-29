@@ -29,17 +29,40 @@ using Jamcast.Extensibility.UI.Dialogs;
 
 namespace Jamcast.Plugins.Murfie.UI.ViewModel
 {
-    internal class LoggedInViewModel
+    internal class LoggedInViewModel : ObservableObject
     {
         public RelayCommand LogOutCommand { get; private set; }
 
         public event Action LoggedOut;
+        public event Action ConfigurationChanged;
 
         public string Email
         {
             get
             {
                 return Configuration.Instance.Email;
+            }
+        }
+
+        public bool IsLosslessAvailable
+        {
+            get
+            {
+                return Configuration.Instance.IsLosslessAvailable;
+            }
+        }
+
+        public bool IsLosslessEnabled
+        {
+            get
+            {
+                return Configuration.Instance.IsLosslessEnabled;
+            }
+            set
+            {
+                Configuration.Instance.IsLosslessEnabled = value;
+                notifyConfigurationChanged();
+                OnPropertyChanged("IsLosslessEnabled");
             }
         }
 
@@ -59,6 +82,12 @@ namespace Jamcast.Plugins.Murfie.UI.ViewModel
                 this.LoggedOut();
             });
             dialog.Show();
+        }
+
+        private void notifyConfigurationChanged()
+        {
+            if (this.ConfigurationChanged != null)
+                this.ConfigurationChanged();
         }
     }
 }

@@ -103,11 +103,13 @@ namespace Jamcast.Plugins.Murfie.UI.ViewModel
                 var pw = password.Password;
                 if (String.IsNullOrWhiteSpace(pw))
                     throw new ApplicationException("Password field cannot be left blank");
-
+                
                 if (API.Authenticate(username, pw))
                 {
                     Configuration.Instance.Email = username;
                     Configuration.Instance.Password = pw;
+                    Configuration.Instance.IsLosslessAvailable = API.LoggedInUser.capabilities.lossless != null;
+                    Configuration.Instance.IsLosslessEnabled = Configuration.Instance.IsLosslessAvailable;
                     Configuration.Instance.Save();
                     this.LoginSuccess();
                 }

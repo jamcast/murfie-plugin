@@ -37,8 +37,8 @@ namespace Jamcast.Plugins.Murfie
 
         public override RequestInitializationResult Initialize()
         {
-            _track = API.GetMediaUri(Convert.ToInt32(this.Context.Data[0]), Convert.ToInt32(this.Context.Data[1]), Configuration.Instance.EnableFlac);
-            var format = Configuration.Instance.EnableFlac ? MediaFormats.FLAC : MediaFormats.MP3;
+            _track = API.GetMediaUri(Convert.ToInt32(this.Context.Data[0]), Convert.ToInt32(this.Context.Data[1]), Configuration.Instance.IsLosslessEnabled);
+            var format = Configuration.Instance.IsLosslessEnabled ? MediaFormats.FLAC : MediaFormats.MP3;
             AudioRequestInitializationResult result = new AudioRequestInitializationResult()
             {
                 CanProceed = true,

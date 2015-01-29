@@ -46,7 +46,16 @@ namespace Jamcast.Plugins.Murfie
         private static string MURFIE_API_MEDIA_URI_QUERY_TEMPLATE = MURFIE_API_ROOT_URL + "/discs/{0}/tracks/{1}.json?auth_token={2}";
 
         private static string _token;
+        private static user _user;
         private static List<discQueryResult> _discCache;
+
+        public static user LoggedInUser
+        {
+            get
+            {
+                return _user;
+            }
+        }
 
         public static bool IsLoggedIn()
         {
@@ -84,7 +93,8 @@ namespace Jamcast.Plugins.Murfie
                         throw new ApplicationException(result.message);
                     if (result.user == null)
                         return false;
-                    _token = result.user.token;
+                    _user = result.user;
+                    _token = result.user.token;                    
                 }
                 return IsLoggedIn();
             }
@@ -135,11 +145,11 @@ namespace Jamcast.Plugins.Murfie
             return (from t in disc.tracks where t.id == trackID select t).FirstOrDefault();
         }
 
-        public static track GetMediaUri(int discID, int trackID, bool getFlac)
+        public static track GetMediaUri(int discID, int trackID, bool preferLossless)
         {
             doRequiresAuth();
             string url = String.Format(MURFIE_API_MEDIA_URI_QUERY_TEMPLATE, discID, trackID, _token);
-            if (getFlac)
+            if (_user.capabilities.lossless != null && preferLossless)
                 url += "&media_format=flac";
             HttpWebRequest request = HttpWebRequest.Create(url) as HttpWebRequest;
             var response = request.GetResponse();
