@@ -42,7 +42,7 @@ namespace Jamcast.Plugins.Murfie
         private static string MURFIE_API_ROOT_URL = "https://www.murfie.com/api";
         private static string MURFIE_API_AUTH_URL = MURFIE_API_ROOT_URL + "/tokens";
         private static string MURFIE_API_DISCS_URL = MURFIE_API_ROOT_URL + "/discs.json";
-        private static string MURFIE_API_TRACKS_URL_TEMPLATE = MURFIE_API_ROOT_URL + "/discs/{0}.json";
+        private static string MURFIE_API_TRACKS_URL_TEMPLATE = MURFIE_API_ROOT_URL + "/discs/{0}.json?auth_token={1}";
         private static string MURFIE_API_MEDIA_URI_QUERY_TEMPLATE = MURFIE_API_ROOT_URL + "/discs/{0}/tracks/{1}.json?auth_token={2}";
 
         private static string _token;
@@ -168,9 +168,10 @@ namespace Jamcast.Plugins.Murfie
 
         private static List<track> GetDiscTracks(int id)
         {
+            doRequiresAuth();
             verifyDiskCache();
             Log.Info(LOG_MODULE, "Retrieving tracks for disc {0}...", id);
-            HttpWebRequest request = HttpWebRequest.Create(String.Format(MURFIE_API_TRACKS_URL_TEMPLATE, id)) as HttpWebRequest;
+            HttpWebRequest request = HttpWebRequest.Create(String.Format(MURFIE_API_TRACKS_URL_TEMPLATE, id, _token)) as HttpWebRequest;
             var response = request.GetResponse();
             using (var reader = new StreamReader(response.GetResponseStream()))
             {
